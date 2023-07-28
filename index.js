@@ -1,27 +1,27 @@
 //to fetch two tabs := your weather and search weather
-const userTab = document.querySelector("[data-userWeather]")
-const searchTab = document.querySelector("[data-searchWeather]")
-const userContainer = document.querySelector(".weather-container")
+const userTab = document.querySelector("[data-userWeather]");
+const searchTab = document.querySelector("[data-searchWeather]");
+const userContainer = document.querySelector(".weather-container");
 
-const grantAccessContainer = document.querySelector(".grant-location-container")
-const searchForm = document.querySelector("[data-searchForm]")
-const loadingScreen = document.querySelector(".loading-container")
-const userInfoContainer = document.querySelector(".user-info-container")
+const grantAccessContainer = document.querySelector(".grant-location-container");
+const searchForm = document.querySelector("[data-searchForm]");
+const loadingScreen = document.querySelector(".loading-container");
+const userInfoContainer = document.querySelector(".user-info-container");
 
 //initially variables need
 
-let currentTab = userTab;
+let oldTab = userTab;
 const API_KEY = "d48450a03aa081ca76948307bb813229";
-currentTab.classList.add("current-tab")
+oldTab.classList.add("current-tab")
 getfromSessionStorage();
 
-function switchTab(clickedTab){
+function switchTab(newTab){
     //agr dono tab different hai to
-    if(clickedTab != currentTab){
+    if(newTab != oldTab){
         //current tab mein se color hata do pehle
-        currentTab.classList.remove("current-tab");
-        currentTab=clickedTab;
-        currentTab.classList.add("current-tab");
+        oldTab.classList.remove("current-tab");
+        oldTab=newTab;
+        oldTab.classList.add("current-tab");
 
         if(!searchForm.classList.contains("active")){
             //kya search form wala container is invisible
@@ -44,7 +44,7 @@ userTab.addEventListener("click", ()=>{
     switchTab(userTab);
 });
 
-searchTab.addEventListener("click", ()=>{
+searchTab.addEventListener("click", () =>{
     //pass clicked tab as input
     switchTab(searchTab);
 });
@@ -82,6 +82,7 @@ async function fetchUserWeatherInfo(coordinates){
     } catch(err){
         loadingScreen.classList.remove("active");
     }
+    console.log(data);
 }
 
 //these are the values from the weather api
@@ -97,6 +98,7 @@ function renderWeatherInfo(weatherInfo){
     const cloudiness = document.querySelector("[data-cloudiness]");
 
 
+    console.log(weatherInfo);
    
     //fetch weather info from weather info object and put in ui elements
     cityName.innerText = weatherInfo?.name;
@@ -105,8 +107,8 @@ function renderWeatherInfo(weatherInfo){
     weatherIcon.src = `openweathermap.org/img/w/${weatherInfo?.weather?.[0]?.icon}.png`
     temp.innerText = `${weatherInfo?.main?.temp}°C`;
     windspeed.innerText = `${weatherInfo?.wind?.speed} m/s`;
-    humidity.innerText = `${weatherInfo?.main?.humidity} %`;
-    cloudiness.innerText = `${weatherInfo?.clouds?.all} %`; 
+    humidity.innerText = `${weatherInfo?.main?.humidity}%`;
+    cloudiness.innerText = `${weatherInfo?.clouds?.all}%`; 
 }
 
 function getLocation() {
@@ -114,7 +116,7 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(showPosition);
 
     } else {
-        //
+       
     }
 }
 
@@ -128,11 +130,15 @@ function showPosition(position){
     fetchUserWeatherInfo(userCoordinates);
 }
 
+
 //grant acces k upr listener
-const grantAccessButton = document.querySelector("[data-grantAccess]");
+const grantAccessButton = document.querySelector("[data-grant]");
+// console.log(grantAccessButton);
 grantAccessButton.addEventListener("click", getLocation);
 
-let searchInput=document.querySelector("[data-searchInput]");
+
+
+const searchInput=document.querySelector("[data-searchInput]");
 searchForm.addEventListener("submit",(e) => {
     e.preventDefault();
 
@@ -150,8 +156,8 @@ grantAccessContainer.classList.remove("active");
 
 try{
     const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-    );
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+        );
     const data = await response.json();
     //now remove loader
     loadingScreen.classList.remove("active");

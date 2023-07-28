@@ -18,7 +18,7 @@
     width : 100vw;
     height : 100vh;
     color : var(--colorLight2);
-    background-image : linear-gradient(160deg, #112d4e 0%, #3f72af 100%);;
+    background-image : linear-gradient(160deg, #112d4e 0%, #3f72af 100%);
 }
 h1{
     text-align: center;
@@ -30,7 +30,7 @@ h1{
     width: 90%;
     max-width: 550px;
     margin : 0 auto;
-    margin-top : 3rem;
+    margin-top : 4rem;
     display:flex;
     justify-content: space-between; 
 }
@@ -43,7 +43,7 @@ h1{
 }
 
 .tab.current-tab {
-    background-color : rgba(219,226,239,0.5);
+    background-color : rgba(219, 226, 239, 0.5);
     border-radius: 4px;
 }
 
@@ -71,7 +71,7 @@ h1{
     display : none;
 }
 .grant-location-container.active{
-    display : flex;  
+    display:flex;  
 }
 .grant-location-container img{
     margin-bottom: 2rem;
@@ -90,7 +90,7 @@ h1{
 }
 
 .loading-container{
-    /* display: none; */
+    display: none;
 }
 .loading-container.active{
     display: flex;
